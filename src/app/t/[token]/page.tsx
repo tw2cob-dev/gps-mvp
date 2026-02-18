@@ -4,18 +4,27 @@ type PublicTrackingPageProps = {
   params: Promise<{
     token: string;
   }>;
+  searchParams: Promise<{
+    truck?: string;
+  }>;
 };
 
-export default async function PublicTrackingPage({ params }: PublicTrackingPageProps) {
+export default async function PublicTrackingPage({
+  params,
+  searchParams,
+}: PublicTrackingPageProps) {
   const { token } = await params;
+  const { truck } = await searchParams;
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-6 px-6 py-10">
-      <header className="space-y-2">
-        <h1 className="text-3xl font-semibold">Tracking publico</h1>
-        <p className="text-sm text-zinc-500">Token: {token}</p>
+    <main className="h-screen w-screen overflow-hidden bg-[linear-gradient(180deg,#edf1f5,#d6dce6)]">
+      <header className="flex h-11 items-center justify-between border-b border-[#b8c0ce] bg-[linear-gradient(180deg,#f7f9fc,#d5dbe7)] px-4">
+        <strong className="text-sm text-[#1b2332]">IntiRoute | Tracking compartido</strong>
+        <span className="text-xs uppercase tracking-[0.12em] text-[#5d6779]">Token {token}</span>
       </header>
-      <PublicTripView token={token} />
+      <div className="h-[calc(100vh-44px)] min-h-0">
+        <PublicTripView token={token} truckPlate={truck} />
+      </div>
     </main>
   );
 }
